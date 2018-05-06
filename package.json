@@ -1,0 +1,33 @@
+{
+  "name": "hyper-readings-manager",
+  "version": "0.0.1",
+  "description": "A tool for managing groups of hyper-readings",
+  "main": "dist/hyper-readings-manager.cjs.js",
+  "module": "dist/hyper-readings-manager.esm.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "pretest": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "hyper-readings": "0.0.7",
+    "hyperdiscovery": "^7.1.0",
+    "rimraf": "^2.6.2",
+    "speedometer": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "mocha": "^5.1.1",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "standard": "^11.0.1"
+  }
+}
