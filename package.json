@@ -5,15 +5,16 @@
   "main": "dist/hyper-readings-manager.cjs.js",
   "module": "dist/hyper-readings-manager.esm.js",
   "scripts": {
+    "prepublish": "npm build",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "pretest": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Benjamin Forster",
   "license": "MIT",
   "dependencies": {
-    "hyper-readings": "0.0.7",
+    "hyper-readings": "0.0.8",
     "hyperdiscovery": "^7.1.0",
     "rimraf": "^2.6.2",
     "speedometer": "^1.0.0"
