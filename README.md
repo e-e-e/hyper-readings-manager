@@ -1,6 +1,6 @@
 # hyper-readings-manager
 
-This is library to help manage multiple instances of [hyper-readings](https://github.com/sdockray/hyperreadings).
+This is library to help manage and share multiple instances of [hyper-readings](https://github.com/sdockray/hyperreadings).
 
 ## Install
 
@@ -23,7 +23,6 @@ manager.on('ready', () => {
     })
     .catch(e => console.log(e))
 })
-
 ```
 
 ## API
