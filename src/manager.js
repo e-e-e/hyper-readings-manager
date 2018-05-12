@@ -123,7 +123,6 @@ class Manager extends EventEmitter {
       return
     }
     if (readinglist.hr.network) {
-      readinglist.hr.leaveNetwork()
       await readinglist.hr.leaveNetwork()
     }
     const folder = readinglist.folder
@@ -131,7 +130,6 @@ class Manager extends EventEmitter {
     if (!isDirectoryDB(folder)) {
       throw Error('Folder is not a valid db')
     }
-    delete readinglist[key]
     delete this.readinglists[key].hr
     delete this.readinglists[key]
     return rimraf(folder)
