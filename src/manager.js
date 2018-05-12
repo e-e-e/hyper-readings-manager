@@ -137,6 +137,10 @@ class Manager extends EventEmitter {
     return rimraf(folder)
   }
 
+  get (key) {
+    return this.readinglists[key]
+  }
+
   list () {
     // get basic information about the current hrs
     return Object.keys(this.readinglists).map(key => this.readinglists[key])
