@@ -16,8 +16,15 @@ export const stat = (file) => new Promise((resolve, reject) => {
 })
 
 export const rimraf = (dir) => new Promise((resolve, reject) => {
-  rm(dir, (err) => {
-    if (err) return reject(err)
-    resolve()
-  })
+  // TEMPORARY FIX
+  // There is an issue where lstat is hanging inside rimraf :(
+  rm.sync(dir)
+  resolve()
+  // console.log('rrrr', dir)
+  // rm(dir, (err) => {
+  //   console.log('err', err)
+  //   if (err) return reject(err)
+  //   console.log('rimraf')
+  //   resolve()
+  // })
 })

@@ -10,7 +10,7 @@ import networkSpeed from './hyperdb-network-speed'
 const defaultHrOpts = { swarm }
 
 function isDirectoryDB (dir) {
-  return !dir.match(/\.db$/)
+  return dir.match(/\.db$/)
 }
 
 function createHyperReadings (folder, key) {
@@ -74,7 +74,7 @@ class Manager extends EventEmitter {
     }
     console.log('created reading list with key', key)
     console.log('join network')
-    hr.joinNetwork()
+    hr.joinNetwork({ live: false })
     hr.network.on('connection', function (peer, type) {
       // console.log('got', peer, type)
       console.log('connected to', hr.network.connections.length, 'peers')
@@ -124,6 +124,7 @@ class Manager extends EventEmitter {
     }
     if (readinglist.hr.network) {
       readinglist.hr.leaveNetwork()
+      await readinglist.hr.leaveNetwork()
     }
     const folder = readinglist.folder
     // confirm that folder is .db before recursive deletion
@@ -131,6 +132,8 @@ class Manager extends EventEmitter {
       throw Error('Folder is not a valid db')
     }
     delete readinglist[key]
+    delete this.readinglists[key].hr
+    delete this.readinglists[key]
     return rimraf(folder)
   }
 
