@@ -85,6 +85,7 @@ class Manager extends EventEmitter {
     this.readinglists[key] = {
       key,
       hr,
+      title: path.basename(folder, '.db'),
       folder,
       speed: networkSpeed(hr.graph.db)
     }
