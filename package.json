@@ -5,7 +5,7 @@
   "main": "dist/hyper-readings-manager.cjs.js",
   "module": "dist/hyper-readings-manager.esm.js",
   "scripts": {
-    "prepublish": "npm build",
+    "prepublish": "npm run build",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "pretest": "npm run build",
