@@ -6,6 +6,7 @@ import swarm from 'hyperdiscovery'
 
 import { readdir, stat, rimraf } from './fs-as-promised'
 import networkSpeed from './hyperdb-network-speed'
+import storageStats from './hyperdb-storage-stats'
 
 const defaultHrOpts = { swarm }
 
@@ -105,7 +106,8 @@ class Manager extends EventEmitter {
       authorised,
       title: path.basename(folder, '.db'),
       folder,
-      speed: networkSpeed(hr.graph.db)
+      speed: networkSpeed(hr.graph.db),
+      size: storageStats(hr.graph.db)
     }
     return this.readinglists[key]
   }
