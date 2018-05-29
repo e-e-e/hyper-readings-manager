@@ -15,10 +15,10 @@ export default function (archive, opts) {
   }
 
   // if (debug.enabled) {
-  setInterval(function () {
-    if (totalTransfer.up) console.log('Uploaded data:', totalTransfer.up)
-    if (totalTransfer.down) console.log('Downloaded data:', totalTransfer.down)
-  }, 500)
+  // setInterval(function () {
+  //   if (totalTransfer.up) console.log('Uploaded data:', totalTransfer.up)
+  //   if (totalTransfer.down) console.log('Downloaded data:', totalTransfer.down)
+  // }, 500)
   // }
 
   archive.feeds.forEach((feed) => {
