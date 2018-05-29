@@ -18,7 +18,22 @@ function createHyperReadings (folder, key) {
     console.log('opening', folder)
     const hr = HyperReadings(folder, key, defaultHrOpts)
     hr.on('ready', () => resolve(hr))
-    hr.on('error', reject)
+    hr.on('error', () => resolve(false))
+  })
+}
+
+function isAuthorised (hr) {
+  return new Promise((resolve, reject) => {
+    const local = hr.graph.db.local
+    if (!local) return resolve(false)
+    try {
+      hr.graph.db.authorized(local.key, (err, res) => {
+        if (err) return reject(err)
+        return resolve(res)
+      })
+    } catch (e) {
+      resolve(false)
+    }
   })
 }
 
@@ -67,7 +82,6 @@ class Manager extends EventEmitter {
     if (!key) {
       key = hr.key()
     }
-    // const key = hr.key()
     if (this.readinglists[key]) {
       console.log(key, 'is already loaded')
       return this.readinglists[key]
@@ -82,9 +96,13 @@ class Manager extends EventEmitter {
         console.log('peer disconnected')
       })
     })
+
+    const authorised = await isAuthorised(hr)
+
     this.readinglists[key] = {
       key,
       hr,
+      authorised,
       title: path.basename(folder, '.db'),
       folder,
       speed: networkSpeed(hr.graph.db)
@@ -107,6 +125,20 @@ class Manager extends EventEmitter {
     console.log('importing', key)
     const hr = await this.openFolder(folder, key)
     return hr
+  }
+
+  stats () {
+    const keys = Object.keys(this.readinglists)
+    if (!keys) return {}
+    return keys.reduce((p, key) => {
+      const hr = this.get(key)
+      // this will count peers that may be the same across multiple hrs
+      // TODO: fix this to remove duplicate connections
+      p.peers += hr.hr.network.connections.length
+      p.download += hr.speed.downloadSpeed
+      p.upload += hr.speed.uploadSpeed
+      return p
+    }, { peers: 0, download: 0, upload: 0 })
   }
 
   async importFile (file) {
