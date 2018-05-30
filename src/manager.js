@@ -49,7 +49,7 @@ async function getHyperReadingFolders (dir) {
     const s = await stat(resolved)
     // this is crude and treats any folder as a db
     // should check if folder also contains feed etc
-    if (s.isDirectory()) validFolders.push(resolved)
+    if (s.isDirectory()) validFolders.push({ path: resolved, creationTime: s.ctimeMs })
   }
   return validFolders
 }
@@ -74,10 +74,10 @@ class Manager extends EventEmitter {
   async _load () {
     const folders = await getHyperReadingFolders(this.dir)
     console.log('folders', folders)
-    return Promise.all(folders.map((folder) => this.openFolder(folder)))
+    return Promise.all(folders.map((folder) => this.openFolder(folder.path, null, folder.creationTime)))
   }
 
-  async openFolder (folder, key) {
+  async openFolder (folder, key, creationTime) {
     const hr = await createHyperReadings(folder, key)
     console.log('key key', hr.key())
     if (!key) {
@@ -107,7 +107,8 @@ class Manager extends EventEmitter {
       title: path.basename(folder, '.db'),
       folder,
       speed: networkSpeed(hr.graph.db),
-      size: storageStats(hr.graph.db)
+      size: storageStats(hr.graph.db),
+      creationTime: creationTime || Date.now()
     }
     return this.readinglists[key]
   }
@@ -174,9 +175,19 @@ class Manager extends EventEmitter {
     return this.readinglists[key]
   }
 
+  _sortDate (a, b) {
+    const _a = this.readinglists[a].creationTime
+    const _b = this.readinglists[b].creationTime
+    if (_a > _b) return -1
+    if (_a < _b) return 1
+    return 0
+  }
+
   list () {
     // get basic information about the current hrs
-    return Object.keys(this.readinglists).map(key => this.readinglists[key])
+    const lists = Object.keys(this.readinglists)
+    lists.sort(this._sortDate.bind(this))
+    return lists.map(key => this.readinglists[key])
   }
 }
 
