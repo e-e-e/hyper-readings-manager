@@ -99,9 +99,15 @@ class Manager extends EventEmitter {
     })
 
     const authorised = await isAuthorised(hr)
-    const title = await hr.title(hr)
+    const title = await hr.title()
+
+    const watcher = hr.graph.db.watch('@version', async () => {
+      console.log('changed title')
+      this.readinglists[key].title = await hr.title()
+    })
 
     this.readinglists[key] = {
+      watcher,
       key,
       hr,
       authorised,
@@ -156,6 +162,7 @@ class Manager extends EventEmitter {
 
   async remove (key) {
     const readinglist = this.readinglists[key]
+    readinglist.watcher.destroy()
     if (!readinglist) {
       console.log(key, 'does not exist!')
       return
