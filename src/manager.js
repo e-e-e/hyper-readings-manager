@@ -99,12 +99,13 @@ class Manager extends EventEmitter {
     })
 
     const authorised = await isAuthorised(hr)
+    const title = await hr.title(hr)
 
     this.readinglists[key] = {
       key,
       hr,
       authorised,
-      title: path.basename(folder, '.db'),
+      title,
       folder,
       speed: networkSpeed(hr.graph.db),
       size: storageStats(hr.graph.db),
@@ -116,18 +117,19 @@ class Manager extends EventEmitter {
   async new (name) {
     console.log('making new', name)
     const folder = path.join(this.dir, `${name}.db`)
-    const hr = await this.openFolder(folder)
-    return hr
+    const hrInfo = await this.openFolder(folder)
+    await hrInfo.hr.setTitle(name)
+    hrInfo.title = name
+    return hrInfo
   }
 
-  async import (key, name) {
+  async import (key) {
     if (!key) throw new Error('Requires Key to import hyper-reading')
     if (this.readinglists[key]) return this.readinglists[key]
-    const filename = name || key
-    const folder = path.join(this.dir, `${filename}.db`)
+    const folder = path.join(this.dir, `${key}.db`)
     console.log('importing', key)
-    const hr = await this.openFolder(folder, key)
-    return hr
+    const hrInfo = await this.openFolder(folder, key)
+    return hrInfo
   }
 
   stats () {
