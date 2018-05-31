@@ -14,7 +14,7 @@
   "author": "Benjamin Forster",
   "license": "MIT",
   "dependencies": {
-    "hyper-readings": "0.0.13",
+    "hyper-readings": "0.0.14",
     "hyperdiscovery": "^7.1.0",
     "rimraf": "^2.6.2",
     "speedometer": "^1.0.0"
