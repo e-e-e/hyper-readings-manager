@@ -30,7 +30,6 @@ export default function (archive, opts) {
   Object.defineProperty(size, 'totalPercentage', {
     get: function () {
       if (!this.empty) {
-        console.log('this', this.total.downloaded)
         const p = (this.total.downloaded / this.totalExpected) * 100
         return (p > 100) ? 100 : p
       }
