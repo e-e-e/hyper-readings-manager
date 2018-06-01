@@ -90,12 +90,12 @@ class Manager extends EventEmitter {
     console.log('created reading list with key', key)
     console.log('join network')
     hr.joinNetwork({ live: false })
-    hr.network.once('connection', function (peer, type) {
+    hr.network.on('connection', function (peer, type) {
       // console.log('got', peer, type)
       console.log('connected to', hr.network.connections.length, 'peers')
-      peer.on('close', function () {
-        console.log('peer disconnected')
-      })
+      // peer.on('close', function () {
+      //   console.log('peer disconnected')
+      // })
     })
 
     const authorised = await isAuthorised(hr)
