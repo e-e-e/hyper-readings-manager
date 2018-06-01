@@ -198,6 +198,19 @@ class Manager extends EventEmitter {
     lists.sort(this._sortDate.bind(this))
     return lists.map(key => this.readinglists[key])
   }
+
+  activeLists () {
+    const lists = Object.keys(this.readinglists)
+    return lists.map((key) => {
+      if (this.readinglists[key].size.totalPercentage !== 100) {
+        return null
+      }
+      return {
+        title: this.readinglists[key].title,
+        key
+      }
+    }).filter(v => !!v)
+  }
 }
 
 export default Manager

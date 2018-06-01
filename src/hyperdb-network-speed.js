@@ -22,7 +22,6 @@ export default function (archive, opts) {
   // }
 
   archive.feeds.forEach((feed) => {
-    console.log('adding feed')
     feed.on('download', function (block, data) {
       totalTransfer.down += data.length
       ondownload(data.length)

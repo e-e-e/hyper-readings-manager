@@ -11,12 +11,11 @@ export default function (archive, opts) {
   archive.feeds.forEach((feed) => {
     // init
     const key = feed.key.toString('hex')
-    console.log(feed)
     size.byKey[key] = {
       downloaded: feed.downloaded(),
       expected: feed.length
     }
-    console.log(size.byKey[key].downloaded, '/', size.byKey[key].expected)
+    // console.log(size.byKey[key].downloaded, '/', size.byKey[key].expected)
     size.total.downloaded += size.byKey[key].downloaded
     size.total.expected += size.byKey[key].expected
     // set updater
