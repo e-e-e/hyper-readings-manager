@@ -89,9 +89,8 @@ class Manager extends EventEmitter {
     }
     console.log('created reading list with key', key)
     console.log('join network')
-    hr.joinNetwork({ live: false })
+    hr.joinNetwork({ live: true })
     hr.network.once('connection', function (peer, type) {
-      // console.log('got', peer, type)
       console.log('connected to', hr.network.connections.length, 'peers')
       // peer.on('close', function () {
       //   console.log('peer disconnected')
@@ -102,7 +101,6 @@ class Manager extends EventEmitter {
     const title = await hr.title()
 
     const watcher = hr.graph.db.watch('@version', async () => {
-      console.log('changed title')
       this.readinglists[key].title = await hr.title()
     })
 
@@ -121,7 +119,6 @@ class Manager extends EventEmitter {
   }
 
   async new (name) {
-    console.log('making new', name)
     const folder = path.join(this.dir, `${name}.db`)
     const hrInfo = await this.openFolder(folder)
     await hrInfo.hr.setTitle(name)
