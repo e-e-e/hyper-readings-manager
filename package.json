@@ -1,6 +1,6 @@
 {
   "name": "hyper-readings-manager",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A tool for managing groups of hyper-readings",
   "main": "dist/hyper-readings-manager.cjs.js",
   "module": "dist/hyper-readings-manager.esm.js",
