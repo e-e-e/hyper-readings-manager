@@ -12,6 +12,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Benjamin Forster",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-e-e/hyper-readings-manager.git"
+  },
   "license": "MIT",
   "dependencies": {
     "hyper-readings": "0.0.14",
