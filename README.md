@@ -1,5 +1,7 @@
 # hyper-readings-manager
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/samiz-dat/hyper-readings-manager.svg)](https://greenkeeper.io/)
+
 This is library to help manage and share multiple instances of [hyper-readings](https://github.com/sdockray/hyperreadings).
 
 ## Install
